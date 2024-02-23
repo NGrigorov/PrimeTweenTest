@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpawnPopUp : MonoBehaviour
@@ -24,10 +25,23 @@ public class SpawnPopUp : MonoBehaviour
 
     public void Spawn()
     {
-        for (int i = 0; i < spawnAmount; i++)
+        StartCoroutine(UnitTest());
+    }
+
+    private IEnumerator UnitTest()
+    {
+        for (int k = 0; k < 2; k++)
         {
-            Vector3 pos = new Vector3(Random.Range(min.x, max.x), Random.Range(min.y, max.y), Random.Range(min.z, max.z));
-            DmgPopUpManager.Instance.OnDamageDealt?.Invoke(dmg, pos, col);
+            for (int j = 0; j < 6; j++)
+            {
+                for (int i = 0; i < spawnAmount; i++)
+                {
+                    Vector3 pos = new Vector3(Random.Range(min.x, max.x), Random.Range(min.y, max.y), Random.Range(min.z, max.z));
+                    DmgPopUpManager.Instance.OnDamageDealt?.Invoke(dmg, pos, col);
+                }
+                yield return new WaitForSeconds(0.25f);
+            }
+            yield return new WaitForSeconds(2f);
         }
     }
 }
